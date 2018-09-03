@@ -22,17 +22,19 @@ export default {
         check,
         i;
 
-    this.msg = this.msg.replace(/[^0-9X]/gi, '');
+    this.message = this.msg;
 
-    if (this.msg.length != 10) {
+    this.message = this.msg.replace(/[^0-9X]/gi, '');
+
+    if (this.message.length != 10) {
         //return false;
     }
 
-    if (this.msg.length == 10) {
+    if (this.message.length == 10) {
         weight = 10;
         sum = 0;
         for (i = 0; i < 9; i++) {
-            digit = parseInt(this.msg[i]);
+            digit = parseInt(this.message[i]);
             sum += weight*digit;
             weight--;
         }
@@ -40,8 +42,8 @@ export default {
         if (check == 10) {
             check = 'X';
         }
-        if (check == this.msg[this.msg.length-1].toUpperCase() == true){
-          return this.msg + ' is Valid';
+        if (check == this.message[this.message.length-1].toUpperCase() == true){
+          return this.msg  + ' is Valid';
         } else {
           return this.msg + ' is Not Valid';
         }
