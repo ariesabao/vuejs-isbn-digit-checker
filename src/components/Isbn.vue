@@ -1,19 +1,21 @@
 <template>
-  <div class="isbn" v-bind:style="{ 'background-color': bgColor  }">
-    <input v-model="msg">
+  <div class="isbn">
+    <template>
+       <input placeholder="Enter ISBN #" v-model="msg" >
     <br />
-    <span v-if="isNotBlank()">
-        <h1 v-if="checkDigit()" >
-              {{ msg }} <span v-bind:style="{ 'color': tColor }"> is Valid </span>
-        </h1>
-        <h1 v-else>
-              {{ msg }} <span v-bind:style="{ 'color': tColor }"> is Not Valid </span>
-        </h1>
+    </template>
+    <template v-if="isNotBlank()">
+        <template v-if="checkDigit()" >
+              {{ msg }} is <span v-bind:style="{ 'color': tColor }">  Valid </span>
+        </template>
+        <template v-else>
+              {{ msg }} is<span v-bind:style="{ 'color': tColor }">  Not Valid </span>
+        </template>
       
-    </span>
-    <span v-else>
-
-    </span>
+    </template>
+    <template v-else>
+       
+    </template>
     
   </div>
 </template>
@@ -25,8 +27,7 @@ export default {
     return {
       msg: '',
       error: 'enter 10-digit only',
-      bgColor: 'transparent',
-      tColor: 'black'
+      tColor: '#ff0000'
     }
   },
   methods: {
@@ -44,8 +45,11 @@ export default {
 
     this.message = this.msg.replace(/[^0-9X]/gi, '');
 
-      var checkInput = (this.message.length != 10) ? true:false
-      this.error = checkInput ? this.error: checkDigit
+      if(this.message.length != 10) {
+        var checkDigit = (check == this.message[this.message.length-1].toUpperCase()) ? true:false
+          this.tColor = checkDigit ? '#008000':'#ff0000';
+          return checkDigit;
+      }
 
       if (this.message.length == 10) {
           weight = 10;
@@ -58,12 +62,13 @@ export default {
           check = 11 - (sum % 11);
           if (check == 10) {
               check = 'X';
-          }
-          
-      }
-      var checkDigit = (check == this.message[this.message.length-1].toUpperCase()) ? true:false
-          this.tColor = checkDigit ? 'green':'red';
+          }   
+          var checkDigit = (check == this.message[this.message.length-1].toUpperCase()) ? true:false
+          this.tColor = checkDigit ? '#008000':'#ff0000';
           return checkDigit;
+      }
+
+      
     }
   }
 }
